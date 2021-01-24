@@ -1,0 +1,6 @@
+Usporedite brzinu izvođenja Bellman-Fordovog algoritma u njegovoj klasičnoj i bržoj inačici.
+Podsjetnik: U bržoj inačici ne obilaze se svaki puta svi bridovi, nego se obilaze vrhovi i 
+to samo oni kojima se u prethodnom obilasku promijenila udaljenost. 
+Također konstruirajte i primjerni graf koji će imati minimalno 20 vrhova, te minimalno 5 
+negativnih težina. Pazite da nemate negativni ciklus! (Za bolju usporedbu brzine izvođenja 
+nemojte unutar koda provjeravati imate li negativan ciklus).
