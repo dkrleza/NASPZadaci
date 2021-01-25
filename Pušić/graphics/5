@@ -1,0 +1,15 @@
+digraph RBTree {
+	"13img" [label=13 color=black]
+	"8img" [label=8 color=red]
+	"13img" -> "8img"
+	a14 [label="" color=black shape=square style=filled width=0.25]
+	"8img" -> a14
+	a15 [label="" color=black shape=square style=filled width=0.25]
+	"8img" -> a15
+	"17img" [label=17 color=red]
+	"13img" -> "17img"
+	a16 [label="" color=black shape=square style=filled width=0.25]
+	"17img" -> a16
+	a17 [label="" color=black shape=square style=filled width=0.25]
+	"17img" -> a17
+}

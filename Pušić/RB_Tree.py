@@ -3,6 +3,7 @@ from __future__ import annotations
 from enum import Enum
 from sys import argv
 from typing import List
+from graphviz import Digraph
 
 
 class Node:
@@ -33,6 +34,8 @@ class Node:
 
 class RedBlackTree:
     root = None
+    n_graph = 0
+    i_dummy = 0
 
     class Rotations(Enum):
         LEFT = 0
@@ -46,6 +49,53 @@ class RedBlackTree:
 
     def __str__(self):
         return '\n'.join(self.preorder())
+
+    def draw(self):
+        queue = [self.root]
+
+        g = Digraph('RBTree')
+
+        while len(queue) > 0:
+            temp = queue[0]
+            queue = queue[1:]
+
+            value = str(temp.value)
+            color = 'black' if temp.color == Node.Colors.BLACK else 'red'
+            g.node(value + 'img', value, color=color)
+
+            if temp.parent is not None:
+                parent_value = str(temp.parent.value)
+                if temp.parent.left is None:
+                    id_dummy = 'a' + str(self.i_dummy)
+                    g.node(id_dummy, '', shape='square', style='filled', color='black', width='0.25')
+                    g.edge(parent_value + 'img', id_dummy)
+                    self.i_dummy += 1
+                g.edge(parent_value + 'img', value + 'img')
+                if temp.parent.right is None:
+                    id_dummy = 'a' + str(self.i_dummy)
+                    g.node(id_dummy, '', shape='square', style='filled', color='black', width='0.25')
+                    g.edge(parent_value + 'img', id_dummy)
+                    self.i_dummy += 1
+
+            if temp.left is not None:
+                queue.append(temp.left)
+            if temp.right is not None:
+                queue.append(temp.right)
+
+            if temp.left is None and temp.right is None:
+                id_dummy = 'a' + str(self.i_dummy)
+                g.node(id_dummy, '', shape='square', style='filled', color='black', width='0.25')
+                g.edge(value + 'img', id_dummy)
+                self.i_dummy += 1
+
+                id_dummy = 'a' + str(self.i_dummy)
+                g.node(id_dummy, '', shape='square', style='filled', color='black', width='0.25')
+                g.edge(value + 'img', id_dummy)
+                self.i_dummy += 1
+
+        g.format = 'png'
+        g.render('graphics/{0}'.format(self.n_graph), view=True)
+        self.n_graph += 1
 
     def preorder(self, node: Node = None, level: int = 0) -> List[str]:
         node = self.root if node is None else node
@@ -130,7 +180,10 @@ class RedBlackTree:
                     else:
                         current = current.right
 
+        self.draw()
         self.repair(new)
+        self.draw()
+
         return
 
     def repair(self, new: Node):
@@ -212,6 +265,8 @@ class RedBlackTree:
             elif current == current.parent.right:
                 current.parent.right = x
 
+            self.draw()
+
         elif current.left is not None and current.right is None:
             deleted_color = current.color
             replacement_color = current.left.color
@@ -223,6 +278,8 @@ class RedBlackTree:
 
             x = current
 
+            self.draw()
+
         elif current.left is None and current.right is not None:
             deleted_color = current.color
             replacement_color = current.right.color
@@ -233,6 +290,8 @@ class RedBlackTree:
             current.right = None
 
             x = current
+
+            self.draw()
 
         else:
             predecessor = current.left
@@ -255,15 +314,23 @@ class RedBlackTree:
             else:
                 predecessor.parent.right = None
 
+            self.draw()
+
         # Adjustments #1
         if deleted_color == Node.Colors.RED and replacement_color in (Node.Colors.RED, None):
+
+            self.draw()
             return True
 
         elif deleted_color == Node.Colors.RED and replacement_color == Node.Colors.BLACK:
             current.color = Node.Colors.RED
 
+            self.draw()
+
         elif deleted_color == Node.Colors.BLACK and replacement_color == Node.Colors.RED:
             current.color = Node.Colors.BLACK
+
+            self.draw()
             return True
 
         else:
@@ -279,6 +346,8 @@ class RedBlackTree:
             # First case
             if x is not None and x.color == Node.Colors.RED:
                 x.color = Node.Colors.BLACK
+
+                self.draw()
                 return True
 
             # Second case
@@ -297,6 +366,8 @@ class RedBlackTree:
                 else:
                     sibling = x_parent.left if x is None else x.parent.left
 
+                self.draw()
+
             # Third case
             if (x is None or x.color == Node.Colors.BLACK) and sibling.color == Node.Colors.BLACK\
                     and (sibling.left is None or sibling.left.color == Node.Colors.BLACK)\
@@ -309,8 +380,11 @@ class RedBlackTree:
 
                 if x.color == Node.Colors.RED:
                     x.color = Node.Colors.BLACK
+
+                    self.draw()
                     return True
                 else:
+                    self.draw()
                     continue
 
             # Fourth case
@@ -336,6 +410,8 @@ class RedBlackTree:
                 else:
                     sibling = x_parent.left if x is None else x.parent.left
 
+                self.draw()
+
             # Fifth case
             left_child = x_parent.left is None if x is None else x.parent.left == x
             mirror_cousin = sibling.right if left_child else sibling.left
@@ -349,51 +425,6 @@ class RedBlackTree:
                     self.left_rotation(sibling.parent)
                 else:
                     self.right_rotation(sibling.parent)
+
+                self.draw()
                 return True
-
-
-if __name__ == '__main__':
-    path = argv[1]
-
-    red_black_tree = RedBlackTree()
-
-    with open(path, mode='r') as number_sequence_source:
-        for line in number_sequence_source:
-            for number in line.split(' '):
-                red_black_tree.insert(int(number))
-
-    print(red_black_tree)
-
-    end = False
-    while not end:
-        command = input('Upišite "+ N" za dodati ili "- N" za obrisati čvor s vrijedosti N: ')
-        try:
-            operation = command.split(' ')[0]
-            argument = command.split(' ')[1]
-
-            try:
-                argument = int(argument)
-            except ValueError:
-                raise TypeError('Vrijednost čvora mora biti prirodan broj!')
-
-            if argument <= 0:
-                raise TypeError('Vrijednost čvora mora biti prirodan broj!')
-
-            if operation not in {'+', '-'}:
-                raise ValueError('Naredba nije definirana!')
-
-        except IndexError:
-            print('Izraz je nepotpun!')
-            continue
-        except TypeError or ValueError as error:
-            print(error)
-            continue
-
-        if operation == '+':
-            red_black_tree.insert(value=argument)
-            print(red_black_tree)
-        elif operation == '-':
-            red_black_tree.delete(value=argument)
-            print(red_black_tree)
-
-        end = True if input('Gotovi? Upišite Y za izlaz: ') == 'Y' else False

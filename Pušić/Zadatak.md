@@ -9,4 +9,9 @@
 
 **Zadatci za 17 bodova**
 
-Isto kao zadatci za 11 bodova, samo treba dodati i brisanje čvora iz stabla
+Isto kao zadatci za 11 bodova, samo treba dodati i brisanje čvora iz stabla.
+
+**Dodatak**
+
+“Dogovorimo se ovako. Napravite vizualnu animaciju RB stabla u pythonu.
+Zatim dodajte opciju da se ta animacija snimi u video fajl.”

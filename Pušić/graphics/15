@@ -1,0 +1,35 @@
+digraph RBTree {
+	"13img" [label=13 color=black]
+	"8img" [label=8 color=red]
+	"13img" -> "8img"
+	"17img" [label=17 color=black]
+	"13img" -> "17img"
+	"1img" [label=1 color=black]
+	"8img" -> "1img"
+	"11img" [label=11 color=black]
+	"8img" -> "11img"
+	a79 [label="" color=black shape=square style=filled width=0.25]
+	"11img" -> a79
+	a80 [label="" color=black shape=square style=filled width=0.25]
+	"11img" -> a80
+	"15img" [label=15 color=red]
+	"17img" -> "15img"
+	a81 [label="" color=black shape=square style=filled width=0.25]
+	"15img" -> a81
+	a82 [label="" color=black shape=square style=filled width=0.25]
+	"15img" -> a82
+	"25img" [label=25 color=red]
+	"17img" -> "25img"
+	a83 [label="" color=black shape=square style=filled width=0.25]
+	"25img" -> a83
+	a84 [label="" color=black shape=square style=filled width=0.25]
+	"25img" -> a84
+	"6img" [label=6 color=red]
+	a85 [label="" color=black shape=square style=filled width=0.25]
+	"1img" -> a85
+	"1img" -> "6img"
+	a86 [label="" color=black shape=square style=filled width=0.25]
+	"6img" -> a86
+	a87 [label="" color=black shape=square style=filled width=0.25]
+	"6img" -> a87
+}

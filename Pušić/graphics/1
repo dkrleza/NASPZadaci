@@ -1,0 +1,7 @@
+digraph RBTree {
+	"13img" [label=13 color=black]
+	a2 [label="" color=black shape=square style=filled width=0.25]
+	"13img" -> a2
+	a3 [label="" color=black shape=square style=filled width=0.25]
+	"13img" -> a3
+}
