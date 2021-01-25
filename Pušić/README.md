@@ -1,4 +1,4 @@
-Implementirano je crveno-crno (RB) stablo: podržani su upisivanje i brisanje, a ulaz i izlaz slijede upute za laboratorijsku vježbu.
-Tekst zadatka nalazi se u datoteci MojSuperZadatak.py.
-Nazivi datoteka su dani prema uputama u mailu, s razlikom da je ekstenzija kôda .py zato što se radi o Pythonu.
-brojevi.txt su primjer datoteke iz koje će program učitati RB stablo.
+Implementirano je crveno-crno (RB) stablo: kroz naredbeni redak podržani su upisivanje (uključujući učitavanje iz datoteke) i brisanje, grafički prikaz u stvarnom vremenu te kreiranje animacije stabla u .mp4 formatu.
+
+Upute za korištenje implementacije preko naredbenog retka vide se pri pokretanju rješenja.
+Datoteka iz koje se učitava stablo treba biti .txt formata i sadržavati slijed brojeva odvojenih razmakom po redoslijedu upisa.
