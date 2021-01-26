@@ -1,0 +1,10 @@
+Binary Tree
+->Node has 2 children links, but no parent link
+->Nodes are sorted
+
+Mirror operation
+->Replace right with left child (swap) for all nodes
+->Do it in O(n) time
+---> O(n*log(n)) not good enough, so no return from root!
+->Use O(1) (constant) additional space
+---> Root->child1->child2->....->target stack not allowed!

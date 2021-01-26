@@ -1,0 +1,34 @@
+How will we return to parent?
+--> use what we have
+--> change tree structure
+
+>4 <--start
+->3 <--next
+-->2
+--->1
+--->NULL
+-->NULL
+->NULL
+
+4->(3,NULL),3->(2,NULL),2->(1,NULL),1->(1,NULL)
+current=4
+last=NULL
+
+4->(NULL,NULL),3->(2,NULL),2->(1,NULL),1->(1,NULL)
+current=4
+last=3
+
+current,last=last,current
+----------------------------
+how to detect when to swap?
+-> use tree's sortedness!
+At any point, there will be 3 neighboring nodes stored in immediately accessible memory along with current one:
+- 2 stored as child nodes and 1 stored as "last".
+And because the tree is normally sorted, the following will only be true for a proper tree where no child node
+leads to the root:
+- Left child will have smaller value than root
+- Right child will have greater value than root
+- "last" node will either have the smallest or the greatest value of all 4 nodes
+Other two states will either have right node stored as left or left node stored as right.
+
+Therefore, we can detect when an iteration will end in a return swap and make the left-right swap accordingly.
